@@ -14,35 +14,26 @@ public class PlayerController2 : MonoBehaviour
     public InputActionAsset InputActions;
     private InputAction moveAction;
     private InputAction fireAction;
-    private InputAction pauseAction;
-    private bool Pause = false;
+    private InputAction pauseActionPlayer;
+    private InputAction pauseActionUI;
+
     public GameObject stoped;
 
-    void Start()
-    {
-        Pause = false;
-        stoped.SetActive(false);
-    }
+
     private void OnEnable()
     {
-        Pause = false;
-        pauseAction = InputSystem.actions.FindAction("Pause");
-        stoped.SetActive(false);
         InputActions.FindActionMap("Player").Enable();
-        InputActions.FindActionMap("UI").Disable();
     }
     private void OnDisable()
     {
-        Pause = true;
-        pauseAction = InputSystem.actions.FindAction("Pause");
-        stoped.SetActive(true);
-        InputActions.FindActionMap("UI").Enable();
         InputActions.FindActionMap("Player").Disable();
     }
     private void Awake()
     {
-        moveAction = InputSystem.actions.FindAction("move");
+        moveAction = InputSystem.actions.FindAction("Move");
         fireAction = InputSystem.actions.FindAction("Jump");
+        pauseActionPlayer = InputSystem.actions.FindAction("Player/Pause");
+        pauseActionUI = InputSystem.actions.FindAction("UI/Pause");
     }
     void Update()
     {
@@ -64,23 +55,36 @@ public class PlayerController2 : MonoBehaviour
         if (fireAction.WasPressedThisFrame())
         {
             Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
-
+            StartCoroutine(Ghost(2));
 
         }
 
-        if (pauseAction.WasPressedThisFrame())
+       PauseGame();
+    }
+
+    private IEnumerator Ghost(float waitTime)
+    {
+        // torna player invisível
+        yield return new WaitForSeconds(waitTime);
+        // torna player visível
+    }
+
+    private void PauseGame()
+    {
+        if (pauseActionPlayer.WasPressedThisFrame())
         {
-            if (Pause == false)
-            {
-                OnDisable();
-            }
-            else
-            {
-                OnEnable();
-            }
-        }
-}
+            InputActions.FindActionMap("Player").Disable();
+            InputActions.FindActionMap("UI").Enable();
+            stoped.SetActive(true);
 
+        }
+        else if (pauseActionUI.WasPressedThisFrame())
+        {
+            InputActions.FindActionMap("Player").Enable();
+            InputActions.FindActionMap("UI").Disable();
+            stoped.SetActive(false);
+        }
+    }
 }
 
 
