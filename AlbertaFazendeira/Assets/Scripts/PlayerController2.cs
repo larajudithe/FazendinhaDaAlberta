@@ -9,6 +9,7 @@ public class PlayerController2 : MonoBehaviour
 {
     public float speed = 20f;
     public float xRange = 15f;
+
     public GameObject projectilePrefab;
 
     public InputActionAsset InputActions;
@@ -16,6 +17,7 @@ public class PlayerController2 : MonoBehaviour
     private InputAction fireAction;
     private InputAction pauseActionPlayer;
     private InputAction pauseActionUI;
+
 
     public GameObject stoped;
 
@@ -35,6 +37,7 @@ public class PlayerController2 : MonoBehaviour
         pauseActionPlayer = InputSystem.actions.FindAction("Player/Pause");
         pauseActionUI = InputSystem.actions.FindAction("UI/Pause");
     }
+
     void Update()
     {
         // float horizontalInput = Input.GetAxis("Horizontal");
@@ -55,19 +58,19 @@ public class PlayerController2 : MonoBehaviour
         if (fireAction.WasPressedThisFrame())
         {
             Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
-            StartCoroutine(Ghost(2));
+            // StartCoroutine(Ghost(2));
 
         }
 
-       PauseGame();
+        PauseGame();
     }
 
-    private IEnumerator Ghost(float waitTime)
-    {
-        // torna player invisível
-        yield return new WaitForSeconds(waitTime);
-        // torna player visível
-    }
+    // private IEnumerator Ghost(float waitTime)
+    // {
+    //     // torna player invisível
+    //     yield return new WaitForSeconds(waitTime);
+    //     // torna player visível
+    // }
 
     private void PauseGame()
     {
@@ -85,7 +88,9 @@ public class PlayerController2 : MonoBehaviour
             stoped.SetActive(false);
         }
     }
+
 }
+
 
 
 
