@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 public class TurnIntoGhost : MonoBehaviour
 {
     private bool ghosted = false;
@@ -10,6 +11,7 @@ public class TurnIntoGhost : MonoBehaviour
     void Start()
     {
         playerRender = GetComponent<Renderer>();
+          print ("AUUUUUUU baby i'm paryin u tonaith");
 
     }
     private void Awake()
@@ -26,11 +28,12 @@ public class TurnIntoGhost : MonoBehaviour
     {
         InputActions.FindActionMap("Player").Disable();
     }
-    void Updade()
+    void Update()
     {
         if (ghostAction.WasPressedThisFrame())
         {
             Ghost();
+          
         }
     }
 
