@@ -83,8 +83,8 @@ public class PlayerController2 : MonoBehaviour
         }
         else if (pauseActionUI.WasPressedThisFrame())
         {
-            InputActions.FindActionMap("Player").Enable();
             InputActions.FindActionMap("UI").Disable();
+            InputActions.FindActionMap("Player").Enable();
             stoped.SetActive(false);
         }
     }

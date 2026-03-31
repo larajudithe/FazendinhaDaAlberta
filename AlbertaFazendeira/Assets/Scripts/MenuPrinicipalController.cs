@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class MenuPrinicipalController : MonoBehaviour
 {
     [SerializeField] public string NomeLevelJogo;
+    [SerializeField] public string NomeMenu;
     public void Jogar()
     {
         SceneManager.LoadScene(NomeLevelJogo);
@@ -14,6 +15,12 @@ public class MenuPrinicipalController : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void VoltarMenu()
+    {
+        SceneManager.LoadScene(NomeMenu);
+    }
+
 
     //  public void Opcao()
     // {
