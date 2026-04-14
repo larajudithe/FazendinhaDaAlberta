@@ -18,7 +18,10 @@ public class DetectCollisions : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+       var playerScript = GameObject.Find("Player").GetComponent<PlayerController2>();
+        if(playerScript != null) playerScript.AddPoints(10);
         Destroy(gameObject);
         Destroy(other.gameObject);
+
     }
 }

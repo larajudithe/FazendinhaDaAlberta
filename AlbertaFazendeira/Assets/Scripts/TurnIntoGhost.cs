@@ -4,7 +4,7 @@ using System.Collections;
 
 public class TurnIntoGhost : MonoBehaviour
 {
-    private bool ghosted = false;
+    public bool ghosted = false;
     private bool TimeEnd = true;
 
     private Renderer playerRender;
@@ -14,7 +14,7 @@ public class TurnIntoGhost : MonoBehaviour
     void Start()
     {
         playerRender = GetComponent<Renderer>();
-          //print ("AUUUUUUU baby i'm paryin u tonaith");
+        //print ("AUUUUUUU baby i'm paryin u tonaith");
 
     }
     private void Awake()
@@ -33,36 +33,44 @@ public class TurnIntoGhost : MonoBehaviour
     }
     void Update()
     {
-        if (ghostAction.WasPressedThisFrame())
+        if (ghostAction.IsPressed())
         {
-            Ghost();
-          
-        }
-    }
-
-    private void Ghost()
-    {
-        if (!ghosted)
-        {
+            // Ghost();
             playerRender.enabled = false;
             ghosted = true;
             StartCoroutine(GhostStop());
+
         }
         else
         {
             playerRender.enabled = true;
             ghosted = false;
-            StartCoroutine(GhostStart());
+        
         }
     }
+
+    // private void Ghost()
+    // {
+    //     if (!ghosted)
+    //     {
+    //         playerRender.enabled = false;
+    //         ghosted = true;
+
+    //     }
+    //     // else
+    //     // {
+    //     //     playerRender.enabled = true;
+    //     //     ghosted = false;
+    //     //     StartCoroutine(GhostStart());
+    //     // }
+    // }
 
     private IEnumerator GhostStop()
     {
         yield return new WaitForSeconds(2);
-        if (ghosted)
-        {
-            Ghost();
-        }
+
+            playerRender.enabled = true;
+            ghosted = false;
     }
     private IEnumerator GhostStart()
     {

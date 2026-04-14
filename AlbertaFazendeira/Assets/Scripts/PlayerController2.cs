@@ -29,7 +29,8 @@ public class PlayerController2 : MonoBehaviour
     public Image displayLife;
     public Sprite[] spritesLife;
     private int life = 3;
-    private int point = 0;
+    public int point = 0;
+
 
 
 
@@ -108,15 +109,29 @@ public class PlayerController2 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
+
         if (other.CompareTag("Animais"))
         {
-            Demage();
-            Destroy(other.gameObject);
+            var random = GetComponentInChildren<TurnIntoGhost>();
+            Debug.Log(random);
+            Debug.Log(random.ghosted);
+            if (random.ghosted)
+            {
+                print("AUUUUUUUUU baby iam praying u tonight");
+            }
+            else
+            {
+                Demage();
+                Destroy(other.gameObject);
+            }
+
         }
     }
     public void AddPoints(int valor)
     {
         point += valor;
+        
+        print (valor);
         AtualizarHUD();
 
     }
