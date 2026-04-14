@@ -2,20 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 
 public class PlayerController2 : MonoBehaviour
 {
-    public float speed = 20f;
-    public float xRange = 15f;
-
-    public GameObject projectilePrefab;
-
+    [Header("PLAYER")]
     public InputActionAsset InputActions;
-    private InputAction moveAction;
-    private InputAction fireAction;
     private InputAction pauseActionPlayer;
     private InputAction pauseActionUI;
+
+
+    [Header("MOVIMENTO")]
+    public float speed = 20f;
+    public float xRange = 15f;
+    private InputAction moveAction;
+
+    [Header("DISPARO")]
+    public GameObject projectilePrefab;
+    private InputAction fireAction;
+
+
+    [Header("HUD")]
+    public TextMeshProUGUI pointText;
+    public Image displayLife;
+    public Sprite[] spritesLife;
+    private int life = 3;
+    private int point = 0;
+
+
+
 
 
     public GameObject stoped;
@@ -35,6 +52,7 @@ public class PlayerController2 : MonoBehaviour
         fireAction = InputSystem.actions.FindAction("Jump");
         pauseActionPlayer = InputSystem.actions.FindAction("Player/Pause");
         pauseActionUI = InputSystem.actions.FindAction("UI/Pause");
+        AtualizarHUD();
     }
 
     void Update()
@@ -87,8 +105,54 @@ public class PlayerController2 : MonoBehaviour
             stoped.SetActive(false);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.CompareTag("Animais"))
+        {
+            Demage();
+            Destroy(other.gameObject);
+        }
+    }
+    public void AddPoints(int valor)
+    {
+        point += valor;
+        AtualizarHUD();
+
+    }
+
+    private void Demage()
+    {
+        life--;
+        if (life < 0) life = 0;
+
+        AtualizarHUD();
+
+
+        // if (life <= 0)
+        // {
+        //     //GameOver();
+        // }
+    }
+
+    void AtualizarHUD()
+    {
+        if (pointText != null) pointText.text = " " + point;
+
+        if (displayLife != null && spritesLife.Length > life)
+        {
+            displayLife.sprite = spritesLife[life];
+        }
+    }
 
 }
+
+
+
+
+
+
+
 
 
 
